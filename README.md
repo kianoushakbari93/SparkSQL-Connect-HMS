@@ -1,22 +1,21 @@
-#Spark 3 connection to Hive
+**Spark 3 connection to Hive**
 
-#Overview
+**Overview**
 This script is designed to connect Spark to HMS(Hive metastore) to help with creating Delta tables and query them in a
 better way. Delta Lake Table Creator Scripts will create a group of Delta tables inside HMS but in case if we want to
 add more data or alter the table's property, only Spark support these operations on Delta tables.
-This script has been created in accordance with UAT-1618 in order to effectively test source-side Delta Lake migration.
-They can be found within the uat-tools Gerrit repository under uat-tools/hive/SparkHiveConnectionScript.
 
-#About Apache Spark
+**About Apache Spark**
 
 Apache Spark is a unified analytics engine for large-scale data processing. It provides high-level APIs in Java, Scala,
 Python and R, and an optimised engine that supports general execution graphs. It also supports a rich set of
 higher-level tools including Spark SQL for SQL and structured data processing, pandas API on Spark for pandas workloads,
 MLlib for machine learning, GraphX for graph processing, and Structured Streaming for incremental computation and stream
-processing. SOURCE
+processing.
 
-#About script
-#The script process:
+**About script**
+
+*The script process:*
 
 - Download Apache Spark
 - Download a few JAR libraries from Maven and put them inside the /jars directory for connecting the Spark to Hive
@@ -25,7 +24,7 @@ processing. SOURCE
 - Create the Delta warehouse directory in HDFS and give it Hive ownership
 - At the end will run the Spark SQL with specified configs
 
-#Spark specified configs in script set to connect to Hive
+**Spark specified configs in script set to connect to Hive**
 
 - io.delta:delta-spark_2.13:3.2.0: Delta package 3.2.0 to run with Scala 2.13
 - Set the spark.sql.extensions to io.delta.sql.DeltaSparkSessionExtension: For the Spark SQL to access the Delta library
@@ -42,7 +41,7 @@ processing. SOURCE
 - Set the spark.sql.warehouse.dir to the path on HDFS: This path is going to be the warehouse for storing the Delta data
 - Set the spark.driver.memory to 2G: Assigning the amount of memory that Spark allowed to use
 
-#Configurable parameters
+**Configurable parameters**
 
 - HIVE_METASTORE_VERSION: The version of Hive on cluster. HINT: Run the "hive --version" on any VM
 - HIVE_METASTORE_URIS: The thrift URI for HMS(Hive metastore). Search hive.metastore.uris in the hive-site.xml ->
@@ -57,7 +56,7 @@ processing. SOURCE
 - DELTA_WAREHOUSE_DIR: Define a valid path to store the Delta files on HDFS (check the namenode nameservice on your
   cluster)
 
-#Pre-configurations on Cluster
+**Pre-configurations on Cluster**
 
 - On VM0 run the commands bellow, to download the delta-hive-assembly_2.13-3.2.0.jar and put it in this path →
   /opt/hive-aux-jars/
@@ -109,7 +108,7 @@ processing. SOURCE
 - Run start script
   ./start-spark.sh
 
-#Delta tables on Spark SQL
+**Delta tables on Spark SQL**
 
 - Creating Delta tables: command below will create and insert into the Delta table in the warehouse directory on HDFS.
   CREATE DATABASE dbx; USE dbx;
