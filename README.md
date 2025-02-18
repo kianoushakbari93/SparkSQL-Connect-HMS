@@ -73,9 +73,7 @@ processing.
   
   - hive.aux.jars.path=file:///opt/hive-aux-jars/delta-hive-assembly_2.13-3.2.0.jar,<
     comma-separate-if-you-have-any-other-jar.jar>
-  
   - hive.input.format=io.delta.hive.HiveInputFormat
- 
   - hive.security.authorization.sqlstd.confwhitelist.append=hive\.input\.format|<pipe-will-separate-the-values>
 
 - Search and change the hive.tez.input.format to io.delta.hive.HiveInputFormat inside the Hive: Cluster manager → Hive →
