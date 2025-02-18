@@ -24,7 +24,7 @@ processing.
 - Create the Delta warehouse directory in HDFS and give it Hive ownership
 - At the end will run the Spark SQL with specified configs
 
-**Spark specified configs in script set to connect to Hive**
+*Spark specified configs in script set to connect to Hive*
 
 - io.delta:delta-spark_2.13:3.2.0: Delta package 3.2.0 to run with Scala 2.13
 - Set the spark.sql.extensions to io.delta.sql.DeltaSparkSessionExtension: For the Spark SQL to access the Delta library
@@ -41,7 +41,7 @@ processing.
 - Set the spark.sql.warehouse.dir to the path on HDFS: This path is going to be the warehouse for storing the Delta data
 - Set the spark.driver.memory to 2G: Assigning the amount of memory that Spark allowed to use
 
-**Configurable parameters**
+*Configurable parameters*
 
 - HIVE_METASTORE_VERSION: The version of Hive on cluster. HINT: Run the "hive --version" on any VM
 - HIVE_METASTORE_URIS: The thrift URI for HMS(Hive metastore). Search hive.metastore.uris in the hive-site.xml ->
@@ -58,20 +58,25 @@ processing.
 
 **Pre-configurations on Cluster**
 
-- On VM0 run the commands bellow, to download the delta-hive-assembly_2.13-3.2.0.jar and put it in this path →
+- On HMS VM run the commands bellow, to download the delta-hive-assembly_2.13-3.2.0.jar and put it in this path →
   /opt/hive-aux-jars/
-  wget -P
+  
+- wget -P
   /opt/hive-aux-jars/ https://github.com/delta-io/delta/releases/download/v3.1.0/delta-hive-assembly_2.13-3.2.0.jar
-  chown -R hive:hive /opt/hive-aux-jars/
+  
+- chown -R hive:hive /opt/hive-aux-jars/
 
-**On HDP:**
+*On HDP:*
 
 - Add these properties to the Custom hive-site in the cluster manager to Hive: Cluster manager → Hive → ADVANCED →
   Custom hive-site
-  hive.aux.jars.path=file:///opt/hive-aux-jars/delta-hive-assembly_2.13-3.2.0.jar,<
-  comma-separate-if-you-have-any-other-jar.jar>
-  hive.input.format=io.delta.hive.HiveInputFormat
-  hive.security.authorization.sqlstd.confwhitelist.append=hive\.input\.format|<pipe-will-separate-the-values>
+  
+  - hive.aux.jars.path=file:///opt/hive-aux-jars/delta-hive-assembly_2.13-3.2.0.jar,<
+    comma-separate-if-you-have-any-other-jar.jar>
+  
+  - hive.input.format=io.delta.hive.HiveInputFormat
+ 
+  - hive.security.authorization.sqlstd.confwhitelist.append=hive\.input\.format|<pipe-will-separate-the-values>
 
 - Search and change the hive.tez.input.format to io.delta.hive.HiveInputFormat inside the Hive: Cluster manager → Hive →
   ADVANCED → Advanced hive-site
@@ -81,15 +86,16 @@ processing.
 
 - Restart the required services to take effect.
 
-**On CDP:**
+*On CDP:*
 
 - Add these 4 properties to the hive-site.xml through the hive-on-tez1 in the cluster manager. Cluster manager →
   hive-on-tez1 → Configuration → search for "Hive Service Advanced Configuration Snippet (Safety Valve) for
   hive-site.xml"
-  hive.security.authorization.sqlstd.confwhitelist.append=hive\.input\.format
-  hive.tez.input.format=io.delta.hive.HiveInputFormat
-  hive.input.format=io.delta.hive.HiveInputFormat
-  hive.aux.jars.path=file:///opt/hive-aux-jars/delta-hive-assembly_2.13-3.1.0.jar
+  
+  - hive.security.authorization.sqlstd.confwhitelist.append=hive\.input\.format
+  - hive.tez.input.format=io.delta.hive.HiveInputFormat
+  - hive.input.format=io.delta.hive.HiveInputFormat
+  - hive.aux.jars.path=file:///opt/hive-aux-jars/delta-hive-assembly_2.13-3.1.0.jar
 
 - Search for Hive Auxiliary JARs Directory in the hive-on-tez1 in the cluster and set the value to the path for
   directory that contain the Delta uber JAR file: Cluster manager → hive-on-tez1 → Configuration → search for "Hive
@@ -97,7 +103,7 @@ processing.
 
 - Restart the required services to take effect.
 
-#How to run the script
+**How to run the script**
 
 - Become sudo (root) user
   su
